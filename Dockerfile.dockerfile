@@ -1,27 +1,20 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
+# Install distutils and dependencies
+RUN apt-get update && apt-get install -y python3-distutils build-essential
+
+# Set working directory
 WORKDIR /app
 
-# Install system dependencies including distutils
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    gcc \
-    python3-dev \
-    python3-distutils \  # Paket penting untuk distutils
-    && rm -rf /var/lib/apt/lists/*
-
-# Pastikan pip up-to-date
-RUN python -m ensurepip --upgrade
-
-# Copy requirements first for better caching
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
+# Copy project files
 COPY . .
 
-# Set environment variable
-ENV FLASK_APP=app.py
+# Install dependencies
+RUN pip install --upgrade pip setuptools
+RUN pip install -r requirements.txt
 
-# Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+# Expose port if needed
+EXPOSE 8000
+
+# Run your app
+CMD ["python", "app.py"]
