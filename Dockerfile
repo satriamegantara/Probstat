@@ -10,8 +10,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
     python3-dev \
-    libpq-dev \  # Untuk dukungan PostgreSQL (jika diperlukan)
-    && rm -rf /var/lib/apt/lists/*
+    libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install dan update pip
 RUN python -m pip install --upgrade pip
@@ -27,7 +27,7 @@ COPY . .
 
 # Set environment variables
 ENV FLASK_APP=app.py
-ENV FLASK_ENV=production  # Untuk environment production
+ENV FLASK_ENV=production
 
 # Expose port yang digunakan (Railway akan handle ini via $PORT)
 EXPOSE 5000
