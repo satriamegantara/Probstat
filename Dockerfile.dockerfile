@@ -1,25 +1,27 @@
-FROM python:3.12-slim
+FROM python:3.9-slim
 
-# Pastikan dependencies dasar tersedia (termasuk untuk build tools)
-RUN apt-get update && apt-get install -y \
+WORKDIR /app
+
+# 1. Install dependensi sistem penting
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     build-essential \
-    curl \
-    git \
-    python3-pip \
-    python3-venv \
     python3-dev \
-    libffi-dev \
-    libssl-dev \
+    python3-venv \  # Pastikan modul venv tersedia
     && rm -rf /var/lib/apt/lists/*
 
-# Install distutils untuk Python 3.12 (sekarang terpisah di PyPI)
-RUN pip install setuptools wheel build
+# 2. Copy requirements terlebih dahulu untuk caching
+COPY requirements.txt .
 
-# (opsional) salin file dan jalankan install
-WORKDIR /app
+# 3. Install dependencies tanpa virtual env (tidak perlu di Docker)
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# 4. Copy seluruh kode aplikasi
 COPY . .
 
-# Gunakan build system modern
-RUN pip install .
+# 5. Set environment variable jika menggunakan Flask
+ENV FLASK_APP=app.py
 
-CMD ["python"]
+# 6. Command untuk menjalankan aplikasi
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
