@@ -1,20 +1,25 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-# Install distutils and dependencies
-RUN apt-get update && apt-get install -y python3-distutils build-essential
+# Pastikan dependencies dasar tersedia (termasuk untuk build tools)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    git \
+    python3-pip \
+    python3-venv \
+    python3-dev \
+    libffi-dev \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Install distutils untuk Python 3.12 (sekarang terpisah di PyPI)
+RUN pip install setuptools wheel build
+
+# (opsional) salin file dan jalankan install
 WORKDIR /app
-
-# Copy project files
 COPY . .
 
-# Install dependencies
-RUN pip install --upgrade pip setuptools
-RUN pip install -r requirements.txt
+# Gunakan build system modern
+RUN pip install .
 
-# Expose port if needed
-EXPOSE 8000
-
-# Run your app
-CMD ["python", "app.py"]
+CMD ["python"]
