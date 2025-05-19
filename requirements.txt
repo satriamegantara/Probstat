@@ -47,3 +47,4 @@ urllib3==1.26.9
 virtualenv==20.27.0
 Werkzeug==2.0.3
 zipp==3.20.2
+setuptools>=66.0.0
