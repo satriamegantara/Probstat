@@ -28,6 +28,7 @@ pillow==10.4.0
 pipenv==2024.4.0
 platformdirs==4.3.6
 pydub==0.25.1
+pyinstaller==6.2.0
 pyinstaller-hooks-contrib==2025.2
 pymongo==4.10.1
 pyparsing==3.1.4
@@ -46,4 +47,3 @@ urllib3==1.26.9
 virtualenv==20.27.0
 Werkzeug==2.0.3
 zipp==3.20.2
-setuptools>=66.0.0
