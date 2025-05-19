@@ -10,7 +10,4 @@ commands = [
 commands = []
 
 [phases.start]
-command = "python app.py"
-
-[phases.start]
 command = "gunicorn app:app --bind 0.0.0.0:$PORT"
