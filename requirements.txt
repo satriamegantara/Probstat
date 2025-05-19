@@ -23,13 +23,10 @@ matplotlib==3.7.5
 numpy==1.24.4
 packaging==24.1
 pandas==2.0.3
-pefile==2023.2.7
 pillow==10.4.0
 pipenv==2024.4.0
 platformdirs==4.3.6
-psycopg2-binary 
-pydub==0.25.1
-pyinstaller==6.2.0
+psycopg2-binary==2.9.9
 pyinstaller-hooks-contrib==2025.2
 pymongo==4.10.1
 pyparsing==3.1.4
@@ -41,7 +38,6 @@ pytz==2024.2
 =======
 pywin32==306
 >>>>>>> e7ed48bd8c991f0458c313ffc6259e944b34744f
-pywin32-ctypes==0.2.3
 requests==2.27.1
 six==1.16.0
 SpeechRecognition==3.10.4
